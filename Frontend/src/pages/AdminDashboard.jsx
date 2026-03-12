@@ -16,7 +16,17 @@ const AdminDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      setStats(prev => ({ ...prev, products: prodRes.total || prodRes.data?.length || 0 }));
+      const [prodRes, orderRes, userRes] = await Promise.all([
+        apiService.getProducts({ limit: 1 }),
+        apiService.getOrders ? apiService.getOrders() : Promise.resolve({ total: 0 }),
+        Promise.resolve({ total: 0 }),
+      ]);
+      setStats({
+        products: prodRes?.total || prodRes?.data?.length || 0,
+        orders: orderRes?.total || 0,
+        users: userRes?.total || 0,
+        revenue: 0,
+      });
     } catch (err) {
       console.error('Stats error:', err);
     }
