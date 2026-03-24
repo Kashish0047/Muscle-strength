@@ -1,7 +1,6 @@
 import express from 'express';
 import {
-    registerAdmin,
-    loginAdmin,
+
     getAllAdmins,
     updateAdminPermissions,
     getDashboardStats,
@@ -16,9 +15,7 @@ import { asyncHandler } from '../middleware/error.middleware.js';
 
 const router = express.Router();
 
-// Public routes
-router.post('/register', registerAdmin);
-router.post('/login', loginAdmin);
+
 
 // Admin only routes
 router.use(authenticateAdmin);
