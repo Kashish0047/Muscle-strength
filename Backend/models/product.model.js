@@ -65,5 +65,15 @@ const productSchema = new mongoose.Schema({
     
 }, {timestamps: true})
 
+// Indexes for faster queries on 1000+ products
+productSchema.index({ ProductName: 'text', Brand: 'text', Description: 'text' }); // Full-text search
+productSchema.index({ Category: 1 });           // Fast category filter
+productSchema.index({ Price: 1 });              // Fast price sort
+productSchema.index({ isFeatured: 1 });         // Fast featured filter
+productSchema.index({ isOnOffer: 1 });          // Fast offer filter
+productSchema.index({ createdAt: -1 });         // Fast default sort (newest first)
+productSchema.index({ Category: 1, Price: 1 }); // Compound: category + price filter
+
+
 const Product = mongoose.model("Product", productSchema)
 export default Product
